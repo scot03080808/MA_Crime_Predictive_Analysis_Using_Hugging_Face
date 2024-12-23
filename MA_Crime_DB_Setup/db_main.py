@@ -1,6 +1,7 @@
 from create_db import create_database
-from create_table import create_table
 from db_connector import DatabaseConnector
+from import_csv import upload_csv_to_mysql
+from crime_tweets import create_db
 
 # Database connection details
 DB_USERNAME = 'root'
@@ -15,12 +16,12 @@ TWEET_CSV_FILE_PATH = 'C:/Users/scot0/603Homework/Project/603_Project_DScott/MA_
 create_database(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME)
 
 # Step 2: Upload MA-crime-employment.csv into mysql database.
-create_table(CRIME_CSV_FILE_PATH,DB_NAME, 'ma_crime_unemployment', DB_HOST, DB_USERNAME, DB_PASSWORD)
+upload_csv_to_mysql(CRIME_CSV_FILE_PATH, DB_HOST, DB_NAME, DB_USERNAME, DB_PASSWORD, 'ma_crime_unemployment')
 # Step 3: Alter and update MA-crime-employment database with new fields for oct 2024 and populate values
 db_connector = DatabaseConnector(DB_USERNAME, DB_PASSWORD, DB_HOST, DB_PORT, DB_NAME)
 
 alter_table = """
-ALTER TABLE ma_crime.ma_crime_unemployment
+ALTER TABLE ma_crime_unemployment
 ADD COLUMN Non_Violent_Crimes_per_10_000_2010 INT,
 ADD COLUMN Violent_Crimes_per_10_000_2010 INT,
 ADD COLUMN Total_Crimes_per_10_000_2010 INT,
@@ -36,7 +37,7 @@ print("Table altered successfully.")
 
 # Step 3: Add values new values for 2022 to the city of Boston
 update_table = """
-UPDATE ma_crime.ma_crime_unemployment
+UPDATE ma_crime_unemployment
 SET
 Non_Violent_Crimes_per_10_000_2010 = 437,
 Violent_Crimes_per_10_000_2010 = 110,
@@ -53,5 +54,5 @@ db_connector.execute_query(update_table)
 print('Updated table ma_crime table successfully.')
 #
 # #Step 3: Create boston_tweets table and populate it with the values included in boston_tweets_2.0.csv
-create_table(TWEET_CSV_FILE_PATH,'ma_crime', 'crime_tweets', DB_HOST, DB_USERNAME, DB_PASSWORD)
+create_db(DB_HOST,DB_USERNAME, DB_PASSWORD, DB_NAME, TWEET_CSV_FILE_PATH)
 print("crime_tweets table created")

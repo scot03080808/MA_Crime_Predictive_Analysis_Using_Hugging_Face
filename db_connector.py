@@ -26,4 +26,11 @@ class DatabaseConnector:
 
     def execute_query(self, query):
         with self.engine.connect() as connection:
-            connection.execute(text(query))
+            trans = connection.begin()  # Begin transaction
+            try:
+                connection.execute(text(query))
+                trans.commit()  # Explicitly commit
+            except Exception as e:
+                trans.rollback()  # Rollback on error
+                print(f"An error occurred: {e}")
+                raise

@@ -4,7 +4,7 @@ import time
 import os
 
 # Twitter API credentials
-bearer_token = "AAAAAAAAAAAAAAAAAAAAAIQexgEAAAAAL2zolD%2FI40zJM7%2BA%2BUUmu%2Fc3mwM%3DIyPFqLNlly53o4j4pQU2hWvqhWGAypUz8mWx5cDFoxIIayYC04"
+bearer_token = "Your token"
 
 # Authenticate using Bearer Token for API v2
 client = tweepy.Client(bearer_token=bearer_token)

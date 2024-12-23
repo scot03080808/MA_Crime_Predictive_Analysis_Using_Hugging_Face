@@ -1,7 +1,6 @@
 # main.py
 from db_connector import DatabaseConnector
 from tweet_analysis_transformers import classify_tweets, compute_percentages
-from crime_classifier import CrimeClassifier
 from sqlalchemy import create_engine
 import pandas as pd
 
@@ -16,7 +15,11 @@ db_connector = DatabaseConnector(DB_USERNAME, DB_PASSWORD, DB_HOST, DB_PORT, DB_
 
 # Step 1: Fetch data from the database and analyze the data
 query = '''
- SELECT * FROM ma_crime_unemployment cu
+ SELECT ct.city, ct.tweet, cu.Violent_Crimes_per_10_000_2022, 
+ cu.Non_Violent_Crimes_per_10_000_2022, cu.Total_Crimes_per_10_000_2022, cu.Unemployment_Rate_2022,
+ cu.Population_2022, cu.Non_Violent_Crimes_per_10_000_2010, cu.Violent_Crimes_per_10_000_2010,
+ cu.Total_Crimes_per_10_000_2010, cu.
+ FROM ma_crime_unemployment cu
  INNER JOIN crime_tweets ct ON ct.city = cu.city
  '''
 print(f'the query is {query} fetching now')
@@ -26,21 +29,23 @@ print('fetch complete', data)
 
 # Rename columns to match what classify_tweets transformer method expects
 data = data.rename(columns={
-    'id': 'tweet_id',
-    'crime_tweets': 'tweet_text'
+    'city': 'tweet_id',
+    'tweet': 'tweet_text'
 })
 
 # extract only needed columns
 data_as_dicts = data[['tweet_id', 'tweet_text']].to_dict('records')
-
 results = classify_tweets(data_as_dicts)
-
 print(f'the results of the tweet_analysis using pipeline from  transformers is {results}')
 
 violent_pct_a, non_violent_pct_a = compute_percentages(results)
-
 print(f"  Violent crime tweets:   {violent_pct_a:.2f}%")
 print(f"  Non-violent crime tweets: {non_violent_pct_a:.2f}%")
+
+# Step 2 compare the results of the tweet analysis compared to the reported violent and non-violent crime rate
+# based on mass.gov that persists in the mysql db.
+# recorded_violent_crimes_2022 = data[['non-violent', 'Non_Violent_Crimes_per_10_000_2022']]
+
 
 # header = data.head() # Get a concise summary of the DataFrame
 # info = data.info() # Generate descriptive statistics

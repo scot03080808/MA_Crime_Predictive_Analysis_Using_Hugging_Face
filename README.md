@@ -1,0 +1,2 @@
+# MA_Crime_Predictive_Analysis_Using_Hugging_Face
+Using a mysql create a database and tables using python scripts using an assortment of libraries.  Then add additional data to compare how unemployment affects the total crime and percentage of violent crime and non-violent crime.  Using hugging face create a predictive analysis model that can be used in a tool such as Tableau to identify trends.  

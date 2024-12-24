@@ -15,11 +15,11 @@ Based on these results each tweet is grouped into the correct categorical bin. T
 
 Below is a list of steps to run this system.
 1.  Download and unzip this package and note the package location
-2.  Download mysql and mysql work bench and run a local instance of mysql to prepare for imports.
-3.  Go to MA_Crime_DB_Setup/create_db.py and modify the database fields to reflect your local environment in order to create a connection to your sql server.
-4.  Also, update the file path within create_db.py to reflect where this package is located and where the .csv files to be uploaded are located.
+2.  Download mysql and mysql work bench and run a local instance of mysql to make it accessible.
+3.  Go to MA_Crime_DB_Setup/db_main.py and modify the database fields to reflect your local environment in order to create a connection to your sql server.
+4.  Also, update the file path within db_main.py to reflect where this package is located and where the .csv files to be uploaded are located.
 5.  Run "pip install -r requirements.txt" within your pycharm or other IDE terminal to install all the necessary libraries needed to run the code.
-6.  Within sqlserver workbench right click on the server and select "refresh all", then Verify that the database and two tables where created and are populated with data.
+6.  Within sqlserver workbench right click on the database pane and select "refresh all", then Verify that the database and two tables where created and are populated with data.
 7.  Go to main.py and update database credentials to reflect your local environment.
 8.  Analyze results in the terminal.
 9.  Feel free to add to the project ideas include:
@@ -48,3 +48,10 @@ This class creates an adjustable amount of fake tweets using a list of violent a
 Also, the amount of violent or non-violent tweets is also adjustable.
 It then uses the csv library to create the tweets csv that is used to generate the crime_tweets table in our ma_crime database.
 
+This code is available for download in github@
+
+https://github.com/scot03080808/MA_Crime_Predictive_Analysis_Using_Hugging_Face/tree/master
+
+Feel free to pull down you own local environment and make pull requests if you'd like to extend on to this project.
+
+David Scott

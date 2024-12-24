@@ -15,15 +15,34 @@ db_connector = DatabaseConnector(DB_USERNAME, DB_PASSWORD, DB_HOST, DB_PORT, DB_
 
 # Step 1: Fetch data from the database and analyze the data
 query = '''
- SELECT * FROM ma_crime_unemployment cu
+ SELECT cu.Non_Violent_Crimes_per_10_000_2010, cu.Violent_Crimes_per_10_000_2010, cu.Total_Crimes_per_10_000_2010,
+ cu.Unemployment_Aug_2010, cu.Non_Violent_Crimes_per_10_000_2022, cu.Violent_Crimes_per_10_000_2022, cu.Total_Crimes_per_10_000_2022, 
+ ct.id, ct.crime_tweets
+ FROM ma_crime_unemployment cu
  INNER JOIN crime_tweets ct ON ct.city = cu.city
  '''
 print(f'the query is {query} fetching now')
 
 data = db_connector.fetch_data(query) # Display the first few rows
-print('fetch complete', data)
+columns = [
+    "Non_Violent_Crimes_per_10_000_2010", "Violent_Crimes_per_10_000_2010", "Total_Crimes_per_10_000_2010",
+    "Unemployment_Aug_2010", "Non_Violent_Crimes_per_10_000_2022", "Violent_Crimes_per_10_000_2022",
+    "Total_Crimes_per_10_000_2022"
+]
 
-# Rename columns to match what classify_tweets transformer method expects
+df = pd.DataFrame(data, columns=columns)
+print("Data fetched successfully:")
+print(df)
+
+# Initialize dictionary for access to the query values outside of the for loop
+crime_data_dict = []
+
+# Store all the data in a dictionary
+for index, row in df.iterrows():
+    crime_data_dict.append({column: row[column] for column in df.columns})
+
+
+# Rename the tweet columns to match what classify_tweets transformer method expects
 data = data.rename(columns={
     'id': 'tweet_id',
     'crime_tweets': 'tweet_text'
@@ -35,9 +54,12 @@ results = classify_tweets(data_as_dicts)
 print(f'the results of the tweet_analysis using pipeline from  transformers is {results}')
 
 violent_pct_a, non_violent_pct_a = compute_percentages(results)
-print(f"  Violent crime tweets:   {violent_pct_a:.2f}%")
-print(f"  Non-violent crime tweets: {non_violent_pct_a:.2f}%")
-
+print(f'Violent crime tweets:   {violent_pct_a:.2f}%')
+print(f'Non-violent crime tweets: {non_violent_pct_a:.2f}%')
+print()
+# "Non_Violent_Crimes_per_10_000_2010", "Violent_Crimes_per_10_000_2010", "Total_Crimes_per_10_000_2010",
+# "Unemployment_Aug_2010", "Non_Violent_Crimes_per_10_000_2022", "Violent_Crimes_per_10_000_2022",
+# "Total_Crimes_per_10_000_2022"
 # Step 2 compare the results of the tweet analysis compared to the reported violent and non-violent crime rate
 # based on mass.gov that persists in the mysql db.
 # recorded_violent_crimes_2022 = data[['non-violent', 'Non_Violent_Crimes_per_10_000_2022']]

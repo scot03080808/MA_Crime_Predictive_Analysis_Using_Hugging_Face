@@ -23,6 +23,8 @@ Below is a list of steps to run this system.
 5.  Run "pip install -r requirements.txt" within your pycharm or other IDE terminal to install all the necessary libraries needed to run the code.
 6.  Within sqlserver workbench right click on the database pane (you might need to adjust the Navigator pane from 'Administration' to 'Schemas' within the bottom of the Navigator pane)
  and select "refresh all" (if you don't see the newly created database), then Verify that the database and two tables where created and are populated with data.
+6b. Within mysql check that both tables crime_tweets and ma_crime_unemployment are populated.  Also, run the following query and ensure that the columns that we added are populated for the city of Boston:
+SELECT * FROM ma_crime.ma_crime_unemployment where city = 'boston'
 7.  Go to main.py and update database credentials to reflect your local environment.
 8.  Analyze results in the terminal.
 9.  Feel free to add to the project ideas include:

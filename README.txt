@@ -14,12 +14,15 @@ Based on these results each tweet is grouped into the correct categorical bin. T
 
 
 Below is a list of steps to run this system.
+1.a.Install mysql connector run: pip install mysql-connector-python
+1.b.If running the requirements.txt file didn't install all necessary packages.  You may need to check some classes imports and run additional pip install imports for thos packages.
 1.  Download and unzip this package and note the package location
 2.  Download mysql and mysql work bench and run a local instance of mysql to make it accessible.
 3.  Go to MA_Crime_DB_Setup/db_main.py and modify the database fields to reflect your local environment in order to create a connection to your sql server.
 4.  Also, update the file path within db_main.py to reflect where this package is located and where the .csv files to be uploaded are located.
 5.  Run "pip install -r requirements.txt" within your pycharm or other IDE terminal to install all the necessary libraries needed to run the code.
-6.  Within sqlserver workbench right click on the database pane and select "refresh all", then Verify that the database and two tables where created and are populated with data.
+6.  Within sqlserver workbench right click on the database pane (you might need to adjust the Navigator pane from 'Administration' to 'Schemas' within the bottom of the Navigator pane)
+ and select "refresh all" (if you don't see the newly created database), then Verify that the database and two tables where created and are populated with data.
 7.  Go to main.py and update database credentials to reflect your local environment.
 8.  Analyze results in the terminal.
 9.  Feel free to add to the project ideas include:

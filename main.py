@@ -154,9 +154,12 @@ Percentage of non-violent crime based on total crime in 2022: {non_violent_crime
 print(f'''
 Difference between crime and unemployment data in Boston based on 2010 vs 2022:
 unemployment rate in 2022 is {round(Unemployment_Aug_2010 - Unemployment_Rate_2022, 1)}% less than the unemployment rate in 2010.
+Violent crime in 2022 is {int(Violent_Crimes_per_10_000_2010 - Violent_Crimes_per_10_000_2022)} less than in 2010
+Non-violent crime in 2022 is {int(Non_Violent_Crimes_per_10_000_2010 - Non_Violent_Crimes_per_10_000_2022)}% less than 2010.
 Total crimes per 10,000 in 2022 is {int(Total_Crimes_per_10_000_2010 - Total_Crimes_per_10_000_2022)} less than in 2010.  
-Percentage of violent crime in 2022 is {int(violent_crime_pct_2010 - Violent_Crimes_per_10_000_2022)}% less than in 2022.
-Percentage of non-violent crime in 2022 is {int(violent_crime_pct_2010 - Violent_Crimes_per_10_000_2022)}% less than in 2022.
+Percentage of violent crime in 2022 is {int(violent_crime_pct_2010 - non_violent_crimes_pct_2022)}% less than in 2020.
+Violent crime in 2022 is {int(violent_crime_pct_2010 - violent_crime_pct_2022)}% less than in 2022
+Percentage of non-violent crime in 2022 is {int(non_violent_crimes_pct_2010 - Violent_Crimes_per_10_000_2022)}% less than in 2022.
 Non-violent crime in 2022 is {int(non_violent_crimes_pct_2010 - non_violent_crimes_pct_2022)}% less than 2010.
 ''')
 
